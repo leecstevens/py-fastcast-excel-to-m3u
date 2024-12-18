@@ -23,6 +23,7 @@ def process_excel_files(file_list):
         sheet = workbook.worksheets[0] # Only need Sheet1
         playlist_items = list(sheet.values)[1:]
         for item in playlist_items:
+            playlist_name = file.split('.xls')[0]
             file_path = item[1]
             artist = item[2]
             track = item[3]
@@ -34,7 +35,9 @@ def process_excel_files(file_list):
                     file_path
                 )
             )
-        print('\n'.join(m3u_data))
+        with open('%s.m3u' % (playlist_name),'w') as m3u_file: # This will overwrite if it exists.
+            m3u_file.write('\n'.join(m3u_data))
+            m3u_file.close()
 
 def time_to_seconds(in_time):
     time_split = in_time.split(':')
