@@ -9,6 +9,7 @@ This tool was created as a thank you to the fine folks at Fastcast, who have alw
 This is meant to be a single file solution, so it is nice and portable.
 
 ## Good to knows
+- Requires openpyxl for reading Excel files (pip install openpyxl)
 - If you are migrating between servers, your file structure needs to be the same
 - If you delete the media files in the M3U, they will not import properly.
 
