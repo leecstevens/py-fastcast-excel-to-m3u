@@ -18,26 +18,23 @@ def process_excel_files(file_list):
     #Variables more verbose for readability
     for file in file_list:
         print('Processing File: %s' % (file))
+        m3u_data = ['#EXTM3U'] # Start staging the output file
         workbook = openpyxl.load_workbook(file)
         sheet = workbook.worksheets[0] # Only need Sheet1
         playlist_items = list(sheet.values)[1:]
-        playlist = []
         for item in playlist_items:
-            order = item[0]
             file_path = item[1]
             artist = item[2]
             track = item[3]
             length = time_to_seconds(item[4]) # Convert time to integer seconds
-            playlist.append(
-                (
-                    order,
-                    file_path,
+            m3u_data.append("EXTINF:%s,%s - %s\n%s" % (
+                    length,
                     artist,
                     track,
-                    length
-                ) # Create a tuple inside the list
+                    file_path
+                )
             )
-        print(playlist)
+        print('\n'.join(m3u_data))
 
 def time_to_seconds(in_time):
     time_split = in_time.split(':')
