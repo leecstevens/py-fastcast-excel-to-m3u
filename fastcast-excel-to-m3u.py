@@ -44,17 +44,14 @@ def process_excel_files(file_list):
         except Exception as e:
             print('File %s not created.\nReason: %s' % (output_file, e))
 
-def time_to_seconds(in_time):
+def time_to_seconds(time_split):
     # This is needed in the M3U format file
-    time_split = in_time.split(':')
-    
-    seconds = int(time_split[-1]) # Add just the seconds
-    seconds += int(time_split[-2]) * 60 # Add 60 seconnds per minute
-    if len(time_split) == 3:
-        seconds += int(time_split[-3]) * 3600 # In case track is > 1 hour, add 3600 seconds per hour
-
+    time_split = time_split.split(':') # Create a list from the input
+    seconds = 0
+    for i in range(len(time_split)):
+        diff = (len(time_split)-1)-i # Breaking this up so it's more readable
+        seconds += (60 ** diff) * int(time_split[i]) # Multiply 60 to the power of sec/min/hours
     return seconds
-
 
 def main():
     process_excel_files(find_excel())
